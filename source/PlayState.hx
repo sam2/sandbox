@@ -17,7 +17,7 @@ class PlayState extends FlxState
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	public var level:FlxTilemap;
-	public var player:FlxSprite;
+	public var player:Player;
 	 
 	override public function create():Void
 	{
@@ -58,6 +58,11 @@ class PlayState extends FlxState
 		level = new FlxTilemap();
 		level.loadMap(FlxTilemap.arrayToCSV(data,40), FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		add(level);
+
+		player = new Player("Sam",FlxG.width/2, FlxG.height/2);
+		add(player);
+
+
 		
 		//FlxG.camera.zoom = ;
 		//FlxG.camera.bounds = level.getBounds();
@@ -84,6 +89,7 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		FlxG.collide(player, level);
 		super.update();
 	}	
 }
