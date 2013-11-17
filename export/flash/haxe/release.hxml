@@ -9,6 +9,6 @@
 -D web
 -swf-version 11.2
 -swf export/flash/bin/sandbox.swf
--swf-header 640:480:60:FFFFFF
+-swf-header 960:540:60:FFFFFF
 -cp export/flash/haxe
 #--remap nme:flash

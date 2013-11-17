@@ -26,7 +26,7 @@ class PlayState extends FlxState
 		// Set a background color
 		FlxG.cameras.bgColor = 0xffaaaaaa;
  
-		var data:String = FlxCaveGenerator.generateCaveString(500, 500, 10, 0.465);
+		var data:String = FlxCaveGenerator.generateCaveString(300, 200, 10, 0.465);
 		level = new FlxTilemap();
 		level.loadMap(data, FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		add(level);
@@ -34,10 +34,10 @@ class PlayState extends FlxState
 
 		player = new Character("Sam", FlxG.width/2, FlxG.height/2, "assets/images/skeleton.json");
 		add(player);
-
+	
 		FlxG.camera.follow(player);
 		
-		//FlxG.camera.zoom = ;
+		//FlxG.camera.zoom = 1;
 		FlxG.camera.bounds = level.getBounds();
 		FlxG.worldBounds.copyFrom(level.getBounds());
 		// Show the mouse (in case it hasn't been disabled)
