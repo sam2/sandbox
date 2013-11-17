@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.tile.FlxTilemap;
 import flixel.addons.tile.FlxCaveGenerator;
+import flixel.util.FlxRect;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -18,27 +19,27 @@ class PlayState extends FlxState
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	public var level:FlxTilemap;
-	public var player:Player;
+	public var player:Character;
 	 
 	override public function create():Void
 	{
 		// Set a background color
 		FlxG.cameras.bgColor = 0xffaaaaaa;
  
-		var data:String = FlxCaveGenerator.generateCaveString(500, 500, 6, 0.4);
+		var data:String = FlxCaveGenerator.generateCaveString(500, 500, 10, 0.465);
 		level = new FlxTilemap();
 		level.loadMap(data, FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		add(level);
 		
 
-		player = new Player("Sam",FlxG.width/2, FlxG.height/2);
+		player = new Character("Sam", FlxG.width/2, FlxG.height/2, "assets/images/skeleton.json");
 		add(player);
 
 		FlxG.camera.follow(player);
 		
 		//FlxG.camera.zoom = ;
-		//FlxG.camera.bounds = level.getBounds();
-		//FlxG.worldBounds.copyFrom(level.getBounds());
+		FlxG.camera.bounds = level.getBounds();
+		FlxG.worldBounds.copyFrom(level.getBounds());
 		// Show the mouse (in case it hasn't been disabled)
 		#if !FLX_NO_MOUSE
 		FlxG.mouse.show();

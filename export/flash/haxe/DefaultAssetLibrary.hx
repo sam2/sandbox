@@ -42,8 +42,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/images/panda.png", __ASSET__assets_images_panda_png);
 		type.set ("assets/images/panda.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("assets/images/skeleton_3.png", __ASSET__assets_images_skeleton_3_png);
-		type.set ("assets/images/skeleton_3.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/skeleton.json", __ASSET__assets_images_skeleton_json);
+		type.set ("assets/images/skeleton.json", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/skeleton.png", __ASSET__assets_images_skeleton_png);
+		type.set ("assets/images/skeleton.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
@@ -134,8 +136,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/images/panda.png", "assets/images/panda.png");
 		type.set ("assets/images/panda.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/skeleton_3.png", "assets/images/skeleton_3.png");
-		type.set ("assets/images/skeleton_3.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/skeleton.json", "assets/images/skeleton.json");
+		type.set ("assets/images/skeleton.json", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/skeleton.png", "assets/images/skeleton.png");
+		type.set ("assets/images/skeleton.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
@@ -593,7 +597,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_images_panda_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_skeleton_3_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_skeleton_json extends flash.utils.ByteArray { }
+class __ASSET__assets_images_skeleton_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray { }
 class __ASSET__flixel_img_debugger_buttons_console_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
@@ -637,6 +642,7 @@ class __ASSET__flixel_snd_flixel_wav extends flash.media.Sound { }
 
 
 #elseif html5
+
 
 
 
