@@ -38,6 +38,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/actor1.json", __ASSET__assets_images_actor1_json);
+		type.set ("assets/images/actor1.json", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/actors.png", __ASSET__assets_images_actors_png);
+		type.set ("assets/images/actors.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/images/panda.png", __ASSET__assets_images_panda_png);
@@ -132,6 +136,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
 		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/actor1.json", "assets/images/actor1.json");
+		type.set ("assets/images/actor1.json", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/actors.png", "assets/images/actors.png");
+		type.set ("assets/images/actors.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/images/panda.png", "assets/images/panda.png");
@@ -595,6 +603,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 #elseif flash
 
 class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
+class __ASSET__assets_images_actor1_json extends flash.utils.ByteArray { }
+class __ASSET__assets_images_actors_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_images_panda_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_skeleton_json extends flash.utils.ByteArray { }
@@ -642,6 +652,8 @@ class __ASSET__flixel_snd_flixel_wav extends flash.media.Sound { }
 
 
 #elseif html5
+
+
 
 
 

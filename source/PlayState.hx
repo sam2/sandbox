@@ -24,15 +24,15 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		// Set a background color
-		FlxG.cameras.bgColor = 0xffaaaaaa;
+		FlxG.cameras.bgColor = 0xff3A1F00;
  
-		var data:String = FlxCaveGenerator.generateCaveString(300, 200, 10, 0.465);
+		var data:String = FlxCaveGenerator.generateCaveString(300, 200, 15, 0.45);
 		level = new FlxTilemap();
 		level.loadMap(data, FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		add(level);
 		
 
-		player = new Character("Sam", FlxG.width/2, FlxG.height/2, "assets/images/skeleton.json");
+		player = new Character("Sam", FlxG.width/2, FlxG.height/2, "assets/images/actor1.json");
 		add(player);
 	
 		FlxG.camera.follow(player);
