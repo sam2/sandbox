@@ -8,75 +8,29 @@ import flixel.FlxG;
 import haxe.Json;
 import haxe.io.Path;
 import openfl.Assets;
+
 /**
  * ...
  * @author ...
  */
 class Character extends FlxSprite
 {
-	var name:String;
-	public var controllable:Bool = true;
-	public var size:Float = .5;
-	
-	
+	public var name:String;	
 
 	public function new(Name:String, X:Float = 0, Y:Float = 0,  ?JsonPath:String, ?SimpleGraphic:Dynamic)
 	{
 		super(X, Y, SimpleGraphic);
-		this.facing = FlxObject.LEFT;
-		//this.loadGraphic("assets/images/skeleton_3.png", true, false, 64, 64);
 		
-		//this.height = 50*size;
-		//this.width = 32 * size;
+		this.facing = FlxObject.LEFT;
 		
 		parseJson(JsonPath);
 		
-		//this.offset.y = this.height*2;
-		//this.scale.set(size, size);
-		//this.centerOffsets(true);
-		/*anims		
-		animation.add("walking_up", [105, 106, 107, 108, 109, 110, 111, 112], 15, true);
-		animation.add("walking_down", [130, 131, 132, 133, 134, 135, 136, 137], 15, true);
-		animation.add("walking_left", [117, 118, 119, 120, 121, 122, 123, 124], 15, true);
-		animation.add("walking_right", [143, 144, 145, 146, 147, 148, 149, 150], 15, true);
-		animation.add("idle_up", [0], 1, true);
-		animation.add("idle_down", [26], 1, true);
-		animation.add("idle_left", [13], 1, true);
-		animation.add("idle_right", [39], 1, true);
-		*/
-
-		//temp
-		//this.maxVelocity.x = 80;
-		//this.maxVelocity.y = 80;
 		this.drag.x = this.maxVelocity.x*4;
 		this.drag.y = this.maxVelocity.y * 4;
 	}
 
 	override public function update():Void 
 	{
-		if (controllable) {
-			this.acceleration.x = 0;
-			this.acceleration.y = 0;
-			if (FlxG.keyboard.anyPressed(["RIGHT", "D"])) 
-			{
-				this.acceleration.x = this.drag.x;
-				this.facing = FlxObject.RIGHT;
-			} 
-			else if (FlxG.keyboard.anyPressed(["LEFT", "A"])) 
-			{
-				this.acceleration.x = -this.drag.x;
-				this.facing = FlxObject.LEFT;
-			}
-			
-			if (FlxG.keyboard.anyPressed(["UP", "W"])) {
-				this.acceleration.y = -this.drag.y;
-				this.facing = FlxObject.UP;
-			} else if (FlxG.keyboard.anyPressed(["DOWN", "S"])) {
-				this.acceleration.y = this.drag.y;
-				this.facing = FlxObject.DOWN;
-			}
-			
-		}
 		resolveAnimation();
 		super.update();
 	}
