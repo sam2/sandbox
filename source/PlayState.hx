@@ -31,7 +31,7 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xff3A1F00;
 		
 		
-		var data:String = FlxCaveGenerator.generateCaveString(300, 200, 10, 0.330);
+		var data:String = FlxCaveGenerator.generateCaveString(300, 200, 10, 0.40);
 		level = new FlxTilemap();
 		level.loadMap(data, FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		
@@ -44,7 +44,7 @@ class PlayState extends FlxState
 		//add enemies randomly
 		enemies = new FlxSpriteGroup();
 			
-		placeSprites(enemies, 20);		
+		placeSprites(enemies, 50);		
 		
 		add(level);
 		add(enemies);
@@ -76,8 +76,8 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		FlxG.collide(player, level);
-		//player.overlaps(enemies, onPlayerHitEnemy);
-		FlxG.collide(player, enemies, onPlayerHitEnemy);
+		FlxG.collide(enemies, enemies);
+		FlxG.overlap(player, enemies, onPlayerHitEnemy);
 		super.update();
 	}
 	
@@ -100,6 +100,7 @@ class PlayState extends FlxState
 				enemy.y = Math.random()*(level.height);
 				enemy.startPos.x = enemy.x;
 				enemy.startPos.y = enemy.y;
+				enemy.destination = null;
 				
 			}
 				
