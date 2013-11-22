@@ -52,7 +52,7 @@ HX_STACK_PUSH("Enemy::new","Enemy.hx",23);
 Float X = __o_X.Default(0);
 Float Y = __o_Y.Default(0);
 {
-	HX_STACK_LINE(55)
+	HX_STACK_LINE(56)
 	this->stunned = false;
 	HX_STACK_LINE(31)
 	this->leashDistance = (int)200;
@@ -78,6 +78,8 @@ Float Y = __o_Y.Default(0);
 	this->path = ::flixel::util::FlxPath_obj::recycle();
 	HX_STACK_LINE(52)
 	this->path->usePooling = false;
+	HX_STACK_LINE(53)
+	this->health = (int)10;
 }
 ;
 	return null();
@@ -98,10 +100,12 @@ Dynamic Enemy_obj::__Create(hx::DynamicArray inArgs)
 
 Void Enemy_obj::unstun( ::flixel::util::FlxTimer Timer){
 {
-		HX_STACK_PUSH("Enemy::unstun","Enemy.hx",170);
+		HX_STACK_PUSH("Enemy::unstun","Enemy.hx",172);
 		HX_STACK_THIS(this);
 		HX_STACK_ARG(Timer,"Timer");
-		HX_STACK_LINE(170)
+		HX_STACK_LINE(173)
+		this->set_color((int)16777215);
+		HX_STACK_LINE(174)
 		this->stunned = false;
 	}
 return null();
@@ -112,16 +116,18 @@ HX_DEFINE_DYNAMIC_FUNC1(Enemy_obj,unstun,(void))
 
 Void Enemy_obj::stun( Float duration){
 {
-		HX_STACK_PUSH("Enemy::stun","Enemy.hx",162);
+		HX_STACK_PUSH("Enemy::stun","Enemy.hx",163);
 		HX_STACK_THIS(this);
 		HX_STACK_ARG(duration,"duration");
-		HX_STACK_LINE(163)
-		this->stunned = true;
 		HX_STACK_LINE(164)
-		this->path->abort();
+		this->stunned = true;
 		HX_STACK_LINE(165)
-		this->destination = null();
+		this->set_color((int)16711680);
 		HX_STACK_LINE(166)
+		this->path->abort();
+		HX_STACK_LINE(167)
+		this->destination = null();
+		HX_STACK_LINE(168)
 		::flixel::util::FlxTimer_obj::start(duration,this->unstun_dyn(),null());
 	}
 return null();
@@ -132,27 +138,25 @@ HX_DEFINE_DYNAMIC_FUNC1(Enemy_obj,stun,(void))
 
 Void Enemy_obj::goHome( ){
 {
-		HX_STACK_PUSH("Enemy::goHome","Enemy.hx",143);
+		HX_STACK_PUSH("Enemy::goHome","Enemy.hx",144);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(144)
-		this->set_color((int)11513775);
-		HX_STACK_LINE(145)
+		HX_STACK_LINE(146)
 		if (((this->destination == null()))){
-			HX_STACK_LINE(147)
-			this->destination = this->startPos;
 			HX_STACK_LINE(148)
-			Array< ::Dynamic > pathPoints = this->level->findPath(::flixel::util::FlxPoint_obj::__new(this->x,this->y),this->destination,null(),null(),null());		HX_STACK_VAR(pathPoints,"pathPoints");
+			this->destination = this->startPos;
 			HX_STACK_LINE(149)
+			Array< ::Dynamic > pathPoints = this->level->findPath(::flixel::util::FlxPoint_obj::__new(this->x,this->y),this->destination,null(),null(),null());		HX_STACK_VAR(pathPoints,"pathPoints");
+			HX_STACK_LINE(150)
 			if (((pathPoints != null()))){
-				HX_STACK_LINE(150)
+				HX_STACK_LINE(151)
 				this->path->run(hx::ObjectPtr<OBJ_>(this),pathPoints,this->moveSpeed,null(),null(),null());
 			}
 		}
-		HX_STACK_LINE(154)
+		HX_STACK_LINE(155)
 		if ((this->path->finished)){
-			HX_STACK_LINE(156)
-			this->destination = null();
 			HX_STACK_LINE(157)
+			this->destination = null();
+			HX_STACK_LINE(158)
 			this->state = ::EStates_obj::idle;
 		}
 	}
@@ -164,57 +168,57 @@ HX_DEFINE_DYNAMIC_FUNC0(Enemy_obj,goHome,(void))
 
 Void Enemy_obj::search( ){
 {
-		HX_STACK_PUSH("Enemy::search","Enemy.hx",119);
+		HX_STACK_PUSH("Enemy::search","Enemy.hx",120);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(120)
+		HX_STACK_LINE(121)
 		if (((this->destination == null()))){
 			struct _Function_2_1{
 				inline static ::flixel::util::FlxPoint Block( ::Enemy_obj *__this){
-					HX_STACK_PUSH("*::closure","Enemy.hx",122);
+					HX_STACK_PUSH("*::closure","Enemy.hx",123);
 					{
-						HX_STACK_LINE(122)
+						HX_STACK_LINE(123)
 						::Player _this = __this->player;		HX_STACK_VAR(_this,"_this");
 						::flixel::util::FlxPoint point = null();		HX_STACK_VAR(point,"point");
-						HX_STACK_LINE(122)
+						HX_STACK_LINE(123)
 						if (((point == null()))){
-							HX_STACK_LINE(122)
+							HX_STACK_LINE(123)
 							point = ::flixel::util::FlxPoint_obj::__new(null(),null());
 						}
-						HX_STACK_LINE(122)
+						HX_STACK_LINE(123)
 						return point->set((_this->x + (_this->width * 0.5)),(_this->y + (_this->height * 0.5)));
 					}
 					return null();
 				}
 			};
-			HX_STACK_LINE(122)
-			this->destination = _Function_2_1::Block(this);
 			HX_STACK_LINE(123)
-			Array< ::Dynamic > pathPoints = this->level->findPath(::flixel::util::FlxPoint_obj::__new(this->x,this->y),this->destination,null(),null(),null());		HX_STACK_VAR(pathPoints,"pathPoints");
+			this->destination = _Function_2_1::Block(this);
 			HX_STACK_LINE(124)
+			Array< ::Dynamic > pathPoints = this->level->findPath(::flixel::util::FlxPoint_obj::__new(this->x,this->y),this->destination,null(),null(),null());		HX_STACK_VAR(pathPoints,"pathPoints");
+			HX_STACK_LINE(125)
 			if (((pathPoints != null()))){
-				HX_STACK_LINE(125)
+				HX_STACK_LINE(126)
 				this->path->run(hx::ObjectPtr<OBJ_>(this),pathPoints,this->moveSpeed,null(),null(),null());
 			}
 		}
-		HX_STACK_LINE(129)
+		HX_STACK_LINE(130)
 		if ((this->path->finished)){
-			HX_STACK_LINE(131)
-			this->destination = null();
 			HX_STACK_LINE(132)
+			this->destination = null();
+			HX_STACK_LINE(133)
 			this->state = ::EStates_obj::returning;
 		}
 		struct _Function_1_1{
 			inline static ::flixel::util::FlxPoint Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",134);
+				HX_STACK_PUSH("*::closure","Enemy.hx",135);
 				{
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					::flixel::util::FlxPoint point = null();		HX_STACK_VAR(point,"point");
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					if (((point == null()))){
-						HX_STACK_LINE(134)
+						HX_STACK_LINE(135)
 						point = ::flixel::util::FlxPoint_obj::__new(null(),null());
 					}
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					return point->set((__this->x + (__this->width * 0.5)),(__this->y + (__this->height * 0.5)));
 				}
 				return null();
@@ -222,17 +226,17 @@ Void Enemy_obj::search( ){
 		};
 		struct _Function_1_2{
 			inline static ::flixel::util::FlxPoint Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",134);
+				HX_STACK_PUSH("*::closure","Enemy.hx",135);
 				{
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					::Player _this = __this->player;		HX_STACK_VAR(_this,"_this");
 					::flixel::util::FlxPoint point = null();		HX_STACK_VAR(point,"point");
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					if (((point == null()))){
-						HX_STACK_LINE(134)
+						HX_STACK_LINE(135)
 						point = ::flixel::util::FlxPoint_obj::__new(null(),null());
 					}
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					return point->set((_this->x + (_this->width * 0.5)),(_this->y + (_this->height * 0.5)));
 				}
 				return null();
@@ -240,25 +244,25 @@ Void Enemy_obj::search( ){
 		};
 		struct _Function_1_3{
 			inline static int Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",134);
+				HX_STACK_PUSH("*::closure","Enemy.hx",135);
 				{
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					::flixel::FlxSprite SpriteB = __this->player;		HX_STACK_VAR(SpriteB,"SpriteB");
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					Float dx = ((__this->x + __this->origin->x) - ((SpriteB->x + SpriteB->origin->x)));		HX_STACK_VAR(dx,"dx");
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					Float dy = ((__this->y + __this->origin->y) - ((SpriteB->y + SpriteB->origin->y)));		HX_STACK_VAR(dy,"dy");
-					HX_STACK_LINE(134)
+					HX_STACK_LINE(135)
 					return ::Std_obj::_int(::Math_obj::sqrt(((dx * dx) + (dy * dy))));
 				}
 				return null();
 			}
 		};
-		HX_STACK_LINE(134)
+		HX_STACK_LINE(135)
 		if (((bool(this->level->ray(_Function_1_1::Block(this),_Function_1_2::Block(this),null(),null())) && bool((_Function_1_3::Block(this) < this->sightRange))))){
-			HX_STACK_LINE(136)
-			this->destination = null();
 			HX_STACK_LINE(137)
+			this->destination = null();
+			HX_STACK_LINE(138)
 			this->state = ::EStates_obj::chasing;
 		}
 	}
@@ -270,22 +274,20 @@ HX_DEFINE_DYNAMIC_FUNC0(Enemy_obj,search,(void))
 
 Void Enemy_obj::chase( ){
 {
-		HX_STACK_PUSH("Enemy::chase","Enemy.hx",100);
+		HX_STACK_PUSH("Enemy::chase","Enemy.hx",101);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(101)
-		this->set_color((int)16711680);
 		struct _Function_1_1{
 			inline static ::flixel::util::FlxPoint Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",103);
+				HX_STACK_PUSH("*::closure","Enemy.hx",104);
 				{
-					HX_STACK_LINE(103)
+					HX_STACK_LINE(104)
 					::flixel::util::FlxPoint point = null();		HX_STACK_VAR(point,"point");
-					HX_STACK_LINE(103)
+					HX_STACK_LINE(104)
 					if (((point == null()))){
-						HX_STACK_LINE(103)
+						HX_STACK_LINE(104)
 						point = ::flixel::util::FlxPoint_obj::__new(null(),null());
 					}
-					HX_STACK_LINE(103)
+					HX_STACK_LINE(104)
 					return point->set((__this->x + (__this->width * 0.5)),(__this->y + (__this->height * 0.5)));
 				}
 				return null();
@@ -293,39 +295,39 @@ Void Enemy_obj::chase( ){
 		};
 		struct _Function_1_2{
 			inline static ::flixel::util::FlxPoint Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",103);
+				HX_STACK_PUSH("*::closure","Enemy.hx",104);
 				{
-					HX_STACK_LINE(103)
+					HX_STACK_LINE(104)
 					::Player _this = __this->player;		HX_STACK_VAR(_this,"_this");
 					::flixel::util::FlxPoint point = null();		HX_STACK_VAR(point,"point");
-					HX_STACK_LINE(103)
+					HX_STACK_LINE(104)
 					if (((point == null()))){
-						HX_STACK_LINE(103)
+						HX_STACK_LINE(104)
 						point = ::flixel::util::FlxPoint_obj::__new(null(),null());
 					}
-					HX_STACK_LINE(103)
+					HX_STACK_LINE(104)
 					return point->set((_this->x + (_this->width * 0.5)),(_this->y + (_this->height * 0.5)));
 				}
 				return null();
 			}
 		};
-		HX_STACK_LINE(103)
+		HX_STACK_LINE(101)
 		if ((this->level->ray(_Function_1_1::Block(this),_Function_1_2::Block(this),null(),null()))){
-			HX_STACK_LINE(105)
-			::flixel::util::FlxVector v = ::flixel::util::FlxVector_obj::__new((this->player->x - this->x),(this->player->y - this->y));		HX_STACK_VAR(v,"v");
 			HX_STACK_LINE(106)
-			v->normalize();
+			::flixel::util::FlxVector v = ::flixel::util::FlxVector_obj::__new((this->player->x - this->x),(this->player->y - this->y));		HX_STACK_VAR(v,"v");
 			HX_STACK_LINE(107)
-			this->acceleration->set_x((v->x * this->drag->x));
+			v->normalize();
 			HX_STACK_LINE(108)
+			this->acceleration->set_x((v->x * this->drag->x));
+			HX_STACK_LINE(109)
 			this->acceleration->set_y((v->y * this->drag->y));
 		}
 		else{
-			HX_STACK_LINE(112)
-			this->destination = null();
 			HX_STACK_LINE(113)
-			this->state = ::EStates_obj::searching;
+			this->destination = null();
 			HX_STACK_LINE(114)
+			this->state = ::EStates_obj::searching;
+			HX_STACK_LINE(115)
 			return null();
 		}
 	}
@@ -337,64 +339,62 @@ HX_DEFINE_DYNAMIC_FUNC0(Enemy_obj,chase,(void))
 
 Void Enemy_obj::wander( ){
 {
-		HX_STACK_PUSH("Enemy::wander","Enemy.hx",79);
+		HX_STACK_PUSH("Enemy::wander","Enemy.hx",80);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(80)
-		this->set_color((int)16777215);
 		struct _Function_1_1{
 			inline static int Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",81);
+				HX_STACK_PUSH("*::closure","Enemy.hx",82);
 				{
-					HX_STACK_LINE(81)
+					HX_STACK_LINE(82)
 					::flixel::FlxSprite SpriteB = __this->player;		HX_STACK_VAR(SpriteB,"SpriteB");
-					HX_STACK_LINE(81)
+					HX_STACK_LINE(82)
 					Float dx = ((__this->x + __this->origin->x) - ((SpriteB->x + SpriteB->origin->x)));		HX_STACK_VAR(dx,"dx");
-					HX_STACK_LINE(81)
+					HX_STACK_LINE(82)
 					Float dy = ((__this->y + __this->origin->y) - ((SpriteB->y + SpriteB->origin->y)));		HX_STACK_VAR(dy,"dy");
-					HX_STACK_LINE(81)
+					HX_STACK_LINE(82)
 					return ::Std_obj::_int(::Math_obj::sqrt(((dx * dx) + (dy * dy))));
 				}
 				return null();
 			}
 		};
-		HX_STACK_LINE(81)
+		HX_STACK_LINE(82)
 		if (((_Function_1_1::Block(this) < this->sightRange))){
-			HX_STACK_LINE(83)
-			this->destination = null();
 			HX_STACK_LINE(84)
+			this->destination = null();
+			HX_STACK_LINE(85)
 			this->state = ::EStates_obj::chasing;
-			HX_STACK_LINE(86)
+			HX_STACK_LINE(87)
 			return null();
 		}
 		struct _Function_1_2{
 			inline static int Block( ::Enemy_obj *__this){
-				HX_STACK_PUSH("*::closure","Enemy.hx",89);
+				HX_STACK_PUSH("*::closure","Enemy.hx",90);
 				{
-					HX_STACK_LINE(89)
+					HX_STACK_LINE(90)
 					::flixel::util::FlxPoint Target = __this->destination;		HX_STACK_VAR(Target,"Target");
-					HX_STACK_LINE(89)
+					HX_STACK_LINE(90)
 					Float dx = ((__this->x + __this->origin->x) - Target->x);		HX_STACK_VAR(dx,"dx");
-					HX_STACK_LINE(89)
+					HX_STACK_LINE(90)
 					Float dy = ((__this->y + __this->origin->y) - Target->y);		HX_STACK_VAR(dy,"dy");
-					HX_STACK_LINE(89)
+					HX_STACK_LINE(90)
 					return ::Std_obj::_int(::Math_obj::sqrt(((dx * dx) + (dy * dy))));
 				}
 				return null();
 			}
 		};
-		HX_STACK_LINE(89)
-		if (((bool((this->destination == null())) || bool((_Function_1_2::Block(this) < (int)32))))){
-			HX_STACK_LINE(90)
+		HX_STACK_LINE(90)
+		if (((bool((bool((this->destination == null())) || bool((_Function_1_2::Block(this) < (int)32)))) || bool((bool((this->velocity->x < (int)5)) && bool((this->velocity->y < (int)5))))))){
+			HX_STACK_LINE(91)
 			this->destination = ::flixel::util::FlxPoint_obj::__new((((((::Math_obj::random() * (int)2) - (int)1)) * this->leashDistance) + this->startPos->x),(((((::Math_obj::random() * (int)2) - (int)1)) * this->leashDistance) + this->startPos->y));
 		}
-		HX_STACK_LINE(93)
-		::flixel::util::FlxVector v = ::flixel::util::FlxVector_obj::__new((this->destination->x - this->x),(this->destination->y - this->y));		HX_STACK_VAR(v,"v");
 		HX_STACK_LINE(94)
-		v->normalize();
+		::flixel::util::FlxVector v = ::flixel::util::FlxVector_obj::__new((this->destination->x - this->x),(this->destination->y - this->y));		HX_STACK_VAR(v,"v");
 		HX_STACK_LINE(95)
-		this->acceleration->set_x((Float((v->x * this->drag->x)) / Float((int)2)));
+		v->normalize();
 		HX_STACK_LINE(96)
-		this->acceleration->set_y((Float((v->y * this->drag->y)) / Float((int)2)));
+		this->velocity->set_x((v->x * this->walkSpeed));
+		HX_STACK_LINE(97)
+		this->velocity->set_y((v->y * this->walkSpeed));
 	}
 return null();
 }
@@ -404,33 +404,33 @@ HX_DEFINE_DYNAMIC_FUNC0(Enemy_obj,wander,(void))
 
 Void Enemy_obj::update( ){
 {
-		HX_STACK_PUSH("Enemy::update","Enemy.hx",57);
+		HX_STACK_PUSH("Enemy::update","Enemy.hx",58);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(59)
+		HX_STACK_LINE(60)
 		if ((!(this->stunned))){
-			HX_STACK_LINE(61)
+			HX_STACK_LINE(62)
 			::Enemy _g = hx::ObjectPtr<OBJ_>(this);		HX_STACK_VAR(_g,"_g");
-			HX_STACK_LINE(61)
+			HX_STACK_LINE(62)
 			{
 				::EStates _switch_1 = (_g->state);
 				switch((_switch_1)->GetIndex()){
 					case 0: {
-						HX_STACK_LINE(63)
+						HX_STACK_LINE(64)
 						this->wander();
 					}
 					;break;
 					case 1: {
-						HX_STACK_LINE(65)
+						HX_STACK_LINE(66)
 						this->chase();
 					}
 					;break;
 					case 2: {
-						HX_STACK_LINE(67)
+						HX_STACK_LINE(68)
 						this->search();
 					}
 					;break;
 					case 3: {
-						HX_STACK_LINE(69)
+						HX_STACK_LINE(70)
 						this->goHome();
 					}
 					;break;
@@ -440,7 +440,7 @@ Void Enemy_obj::update( ){
 				}
 			}
 		}
-		HX_STACK_LINE(75)
+		HX_STACK_LINE(76)
 		this->super::update();
 	}
 return null();

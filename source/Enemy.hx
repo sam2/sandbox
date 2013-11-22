@@ -50,6 +50,7 @@ class Enemy extends Character
 		
 		path = FlxPath.recycle();
 		path.usePooling = false;
+		this.health = 10;
 	}
 	
 	public var stunned:Bool = false;
@@ -77,7 +78,7 @@ class Enemy extends Character
 	
 	private function wander():Void
 	{
-		this.color = 0xFFFFFF;
+		//this.color = 0xFFFFFF;
 		if (FlxMath.distanceBetween(this, player) < sightRange)
 		{
 			destination = null;
@@ -86,19 +87,19 @@ class Enemy extends Character
 			return;
 		}
 		
-		if (destination == null || FlxMath.distanceToPoint(this, destination) < 32)
+		if (destination == null || FlxMath.distanceToPoint(this, destination) < 32 || (this.velocity.x < 5 && this.velocity.y < 5))
 		{
 			destination = new FlxPoint( ((Math.random() * 2) - 1) * leashDistance + startPos.x, ((Math.random() * 2) - 1) * leashDistance + startPos.y);
 		}
 		var v:FlxVector = new FlxVector(destination.x - this.x, destination.y - this.y);
 		v.normalize();
-		this.acceleration.x = v.x*this.drag.x/2;
-		this.acceleration.y = v.y*this.drag.y/2;		
+		this.velocity.x = v.x*walkSpeed;
+		this.velocity.y = v.y*walkSpeed;		
 	}
 	
 	private function chase():Void
 	{
-		this.color = 0xFF0000;
+		//this.color = 0xFF0000;
 		
 		if (level.ray(this.getMidpoint(), player.getMidpoint()))
 		{
@@ -141,7 +142,7 @@ class Enemy extends Character
 	
 	private function goHome():Void
 	{
-		this.color = 0xafafaf;
+		//this.color = 0xafafaf;
 		if (destination == null)
 		{
 			destination = startPos;
@@ -161,6 +162,7 @@ class Enemy extends Character
 	public function stun(duration:Float):Void
 	{
 		stunned = true;
+		this.color = 0xFF0000;
 		path.abort();
 		destination = null;
 		FlxTimer.start(duration, unstun);
@@ -168,6 +170,7 @@ class Enemy extends Character
 	
 	public function unstun(Timer:FlxTimer):Void
 	{
+		this.color = 0xFFFFFF;
 		stunned = false;
 	}
 	

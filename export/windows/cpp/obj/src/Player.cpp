@@ -85,7 +85,7 @@ HX_STACK_PUSH("Player::new","Player.hx",13);
 Float X = __o_X.Default(0);
 Float Y = __o_Y.Default(0);
 {
-	HX_STACK_LINE(78)
+	HX_STACK_LINE(79)
 	this->attackDone = true;
 	HX_STACK_LINE(20)
 	super::__construct(Name,X,Y,JsonPath,SimpleGraphic);
@@ -100,8 +100,10 @@ Float Y = __o_Y.Default(0);
 	HX_STACK_LINE(25)
 	::flixel::FlxG_obj::game->state->add(this->attk);
 	HX_STACK_LINE(26)
-	this->controllable = true;
+	this->attk->kill();
 	HX_STACK_LINE(27)
+	this->controllable = true;
+	HX_STACK_LINE(28)
 	this->attkPos = ::flixel::util::FlxPoint_obj::__new((int)0,(int)0);
 }
 ;
@@ -123,24 +125,24 @@ Dynamic Player_obj::__Create(hx::DynamicArray inArgs)
 
 Void Player_obj::attackHit( ::flixel::FlxSprite attackk,::Enemy enemy){
 {
-		HX_STACK_PUSH("Player::attackHit","Player.hx",97);
+		HX_STACK_PUSH("Player::attackHit","Player.hx",98);
 		HX_STACK_THIS(this);
 		HX_STACK_ARG(attackk,"attackk");
 		HX_STACK_ARG(enemy,"enemy");
-		HX_STACK_LINE(97)
-		if ((this->attk->overlaps(enemy,null(),null()))){
-			HX_STACK_LINE(100)
-			::flixel::util::FlxVector knockBackVector = ::flixel::util::FlxVector_obj::__new((enemy->x - this->x),(enemy->y - this->y));		HX_STACK_VAR(knockBackVector,"knockBackVector");
+		HX_STACK_LINE(98)
+		if (((bool(this->attk->overlaps(enemy,null(),null())) && bool(!(enemy->stunned))))){
 			HX_STACK_LINE(101)
-			knockBackVector->normalize();
+			::flixel::util::FlxVector knockBackVector = ::flixel::util::FlxVector_obj::__new((enemy->x - this->x),(enemy->y - this->y));		HX_STACK_VAR(knockBackVector,"knockBackVector");
 			HX_STACK_LINE(102)
-			enemy->stun((int)1);
+			knockBackVector->normalize();
 			HX_STACK_LINE(103)
-			enemy->set_color((int)255);
+			enemy->stun(.5);
 			HX_STACK_LINE(104)
-			enemy->velocity->set_x((knockBackVector->x * (int)400));
+			enemy->velocity->set_x((knockBackVector->x * (int)1000));
 			HX_STACK_LINE(105)
-			enemy->velocity->set_y((knockBackVector->y * (int)400));
+			enemy->velocity->set_y((knockBackVector->y * (int)1000));
+			HX_STACK_LINE(106)
+			enemy->hurt((int)2);
 		}
 	}
 return null();
@@ -151,12 +153,12 @@ HX_DEFINE_DYNAMIC_FUNC2(Player_obj,attackHit,(void))
 
 Void Player_obj::attackFinished( ::flixel::util::FlxTimer Timer){
 {
-		HX_STACK_PUSH("Player::attackFinished","Player.hx",91);
+		HX_STACK_PUSH("Player::attackFinished","Player.hx",92);
 		HX_STACK_THIS(this);
 		HX_STACK_ARG(Timer,"Timer");
-		HX_STACK_LINE(92)
-		this->attackDone = true;
 		HX_STACK_LINE(93)
+		this->attackDone = true;
+		HX_STACK_LINE(94)
 		this->attk->kill();
 	}
 return null();
@@ -167,17 +169,17 @@ HX_DEFINE_DYNAMIC_FUNC1(Player_obj,attackFinished,(void))
 
 Void Player_obj::attack( ){
 {
-		HX_STACK_PUSH("Player::attack","Player.hx",80);
+		HX_STACK_PUSH("Player::attack","Player.hx",81);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(80)
+		HX_STACK_LINE(81)
 		if ((this->attackDone)){
-			HX_STACK_LINE(83)
-			this->attackDone = false;
 			HX_STACK_LINE(84)
-			this->attk->reset(this->attkPos->x,this->attkPos->y);
+			this->attackDone = false;
 			HX_STACK_LINE(85)
-			::flixel::util::FlxTimer_obj::start((Float(this->attk->animation->_sprite->frames) / Float((int)20)),this->attackFinished_dyn(),null());
+			this->attk->reset(this->attkPos->x,this->attkPos->y);
 			HX_STACK_LINE(86)
+			::flixel::util::FlxTimer_obj::start((Float(this->attk->animation->_sprite->frames) / Float((int)20)),this->attackFinished_dyn(),null());
+			HX_STACK_LINE(87)
 			this->attk->animation->play(HX_CSTRING("attack"),true,null());
 		}
 	}
@@ -189,73 +191,73 @@ HX_DEFINE_DYNAMIC_FUNC0(Player_obj,attack,(void))
 
 Void Player_obj::update( ){
 {
-		HX_STACK_PUSH("Player::update","Player.hx",31);
+		HX_STACK_PUSH("Player::update","Player.hx",32);
 		HX_STACK_THIS(this);
-		HX_STACK_LINE(33)
+		HX_STACK_LINE(34)
 		if ((this->controllable)){
-			HX_STACK_LINE(34)
-			this->acceleration->set_x((int)0);
 			HX_STACK_LINE(35)
-			this->acceleration->set_y((int)0);
+			this->acceleration->set_x((int)0);
 			HX_STACK_LINE(36)
+			this->acceleration->set_y((int)0);
+			HX_STACK_LINE(37)
 			if ((::flixel::FlxG_obj::keyboard->checkKeyStatus(Dynamic( Array_obj<Dynamic>::__new().Add(HX_CSTRING("RIGHT")).Add(HX_CSTRING("D"))),(int)1))){
-				HX_STACK_LINE(38)
-				this->acceleration->set_x(this->drag->x);
 				HX_STACK_LINE(39)
-				this->set_facing((int)16);
+				this->acceleration->set_x(this->drag->x);
 				HX_STACK_LINE(40)
-				this->attk->set_facing((int)16);
+				this->set_facing((int)16);
 				HX_STACK_LINE(41)
+				this->attk->set_facing((int)16);
+				HX_STACK_LINE(42)
 				this->attkPos = ::flixel::util::FlxPoint_obj::__new((int)16,(int)-32);
 			}
 			else{
-				HX_STACK_LINE(43)
+				HX_STACK_LINE(44)
 				if ((::flixel::FlxG_obj::keyboard->checkKeyStatus(Dynamic( Array_obj<Dynamic>::__new().Add(HX_CSTRING("LEFT")).Add(HX_CSTRING("A"))),(int)1))){
-					HX_STACK_LINE(45)
-					this->acceleration->set_x(-(this->drag->x));
 					HX_STACK_LINE(46)
-					this->set_facing((int)1);
+					this->acceleration->set_x(-(this->drag->x));
 					HX_STACK_LINE(47)
-					this->attk->set_facing((int)1);
+					this->set_facing((int)1);
 					HX_STACK_LINE(48)
+					this->attk->set_facing((int)1);
+					HX_STACK_LINE(49)
 					this->attkPos = ::flixel::util::FlxPoint_obj::__new((int)-64,(int)-32);
 				}
 			}
-			HX_STACK_LINE(51)
+			HX_STACK_LINE(52)
 			if ((::flixel::FlxG_obj::keyboard->checkKeyStatus(Dynamic( Array_obj<Dynamic>::__new().Add(HX_CSTRING("UP")).Add(HX_CSTRING("W"))),(int)1))){
-				HX_STACK_LINE(53)
-				this->acceleration->set_y(-(this->drag->y));
 				HX_STACK_LINE(54)
-				this->set_facing((int)256);
+				this->acceleration->set_y(-(this->drag->y));
 				HX_STACK_LINE(55)
-				this->attk->set_facing((int)256);
+				this->set_facing((int)256);
 				HX_STACK_LINE(56)
+				this->attk->set_facing((int)256);
+				HX_STACK_LINE(57)
 				this->attkPos = ::flixel::util::FlxPoint_obj::__new((int)-16,(int)-48);
 			}
 			else{
-				HX_STACK_LINE(58)
+				HX_STACK_LINE(59)
 				if ((::flixel::FlxG_obj::keyboard->checkKeyStatus(Dynamic( Array_obj<Dynamic>::__new().Add(HX_CSTRING("DOWN")).Add(HX_CSTRING("S"))),(int)1))){
-					HX_STACK_LINE(60)
-					this->acceleration->set_y(this->drag->y);
 					HX_STACK_LINE(61)
-					this->set_facing((int)4096);
+					this->acceleration->set_y(this->drag->y);
 					HX_STACK_LINE(62)
-					this->attk->set_facing((int)4096);
+					this->set_facing((int)4096);
 					HX_STACK_LINE(63)
+					this->attk->set_facing((int)4096);
+					HX_STACK_LINE(64)
 					this->attkPos = ::flixel::util::FlxPoint_obj::__new((int)-16,(int)16);
 				}
 			}
-			HX_STACK_LINE(65)
+			HX_STACK_LINE(66)
 			if ((::flixel::FlxG_obj::keyboard->justPressed(HX_CSTRING("X")))){
-				HX_STACK_LINE(66)
+				HX_STACK_LINE(67)
 				this->attack();
 			}
 		}
-		HX_STACK_LINE(71)
-		this->attk->set_x((this->attkPos->x + this->x));
 		HX_STACK_LINE(72)
-		this->attk->set_y((this->attkPos->y + this->y));
+		this->attk->set_x((this->attkPos->x + this->x));
 		HX_STACK_LINE(73)
+		this->attk->set_y((this->attkPos->y + this->y));
+		HX_STACK_LINE(74)
 		this->super::update();
 	}
 return null();

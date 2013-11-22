@@ -23,6 +23,7 @@ class Player extends Character
 		var animationArray:Array<Int> = [0, 1, 2, 3, 4, 5];
 		attk.animation.add("attack", animationArray, 20, false);
 		FlxG.state.add(attk);
+		attk.kill();
 		controllable = true;
 		attkPos = new FlxPoint(0, 0);
 	}
@@ -95,14 +96,14 @@ class Player extends Character
 	
 	public function attackHit(attackk:FlxSprite, enemy:Enemy):Void
 	{		
-		if (attk.overlaps(enemy))
+		if (attk.overlaps(enemy)&& !enemy.stunned)
 		{
 			var knockBackVector:FlxVector = new FlxVector(enemy.x - this.x, enemy.y - this.y);
 			knockBackVector.normalize();
-			enemy.stun(1);
-			enemy.color = 0x0000FF;
-			enemy.velocity.x = knockBackVector.x * 400;
-			enemy.velocity.y = knockBackVector.y * 400;
+			enemy.stun(.5);
+			enemy.velocity.x = knockBackVector.x * 1000;
+			enemy.velocity.y = knockBackVector.y * 1000;
+			enemy.hurt(2);
 		}
 	}
 	
