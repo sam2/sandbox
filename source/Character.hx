@@ -25,12 +25,13 @@ class Character extends FlxSprite
 		
 		parseJson(JsonPath);
 		
-		this.drag.x = this.maxVelocity.x*4;
+		this.drag.x = this.maxVelocity.x * 4;
 		this.drag.y = this.maxVelocity.y * 4;
 	}
 
 	override public function update():Void 
 	{
+		
 		resolveAnimation();
 		super.update();
 	}

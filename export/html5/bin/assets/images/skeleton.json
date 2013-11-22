@@ -1,0 +1,49 @@
+{
+	"sprite": {
+		"texture": "skeleton.png",
+		"framewidth": 32,
+		"frameheight": 32
+	},
+	"velocity": {
+		"max_x": 80,
+		"max_y": 80
+	},
+	"collision": {
+		"x": 8,
+		"y": 13,
+		"width": 16,
+		"height": 20
+	},
+	"collision_map": {
+		"x": 0,
+		"y": -30,
+		"width": 32,
+		"height": 60		
+	},
+	"animations": {
+		"velocities": {
+			"def": 0,
+			"idle": 1,
+			"walking": 8,
+			"running": 12
+		},
+		"frames": {
+			"up": {
+				"idle": [0],
+				"walking":[105, 106, 107, 108, 109, 110, 111, 112]
+			},
+			"down": {
+				"idle": [26],
+				"walking":[130, 131, 132, 133, 134, 135, 136, 137]
+			},
+			"left": {
+				"idle": [13],
+				"walking":[117, 118, 119, 120, 121, 122, 123, 124]
+			},
+			"right": {
+				"idle": [39],
+				"walking":[143, 144, 145, 146, 147, 148, 149, 150]
+			}
+		}
+	}
+}

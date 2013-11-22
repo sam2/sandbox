@@ -1,0 +1,49 @@
+{
+	"sprite": {
+		"texture": "actors.png",
+		"framewidth": 32,
+		"frameheight": 32
+	},
+	"velocity": {
+		"max_x": 80,
+		"max_y": 80
+	},
+	"collision": {
+		"x": 8,
+		"y": 13,
+		"width": 16,
+		"height": 20
+	},
+	"collision_map": {
+		"x": 0,
+		"y": -30,
+		"width": 32,
+		"height": 60		
+	},
+	"animations": {
+		"velocities": {
+			"def": 0,
+			"idle": 1,
+			"walking": 8,
+			"running": 12
+		},
+		"frames": {
+			"up": {
+				"idle": [91],
+				"walking":[90, 91, 92]
+			},
+			"down": {
+				"idle": [55],
+				"walking":[54, 55, 56]
+			},
+			"left": {
+				"idle": [67],
+				"walking":[66, 67, 68]
+			},
+			"right": {
+				"idle": [79],
+				"walking":[78, 79, 80]
+			}
+		}
+	}
+}

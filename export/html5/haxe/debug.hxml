@@ -1,0 +1,16 @@
+-main ApplicationMain 
+-lib openfl
+-lib openfl-html5-dom
+-lib flixel
+-lib flixel-addons
+-cp source
+-D tools=1.1.6
+-D openfl=1.1
+-D html5
+-D web
+-js export/html5/bin/sandbox.js
+-cp export/html5/haxe
+-D html5
+-D html
+--remap flash:flash
+-debug

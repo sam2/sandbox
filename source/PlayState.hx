@@ -24,20 +24,18 @@ class PlayState extends FlxState
 	public var player:Player;
 	public var enemy:Enemy;
 	public var enemies:FlxSpriteGroup;
-	 
+	
 	override public function create():Void
 	{
 		// Set a background color
 		FlxG.cameras.bgColor = 0xff3A1F00;
-		
 		
 		var data:String = FlxCaveGenerator.generateCaveString(300, 200, 10, 0.40);
 		level = new FlxTilemap();
 		level.loadMap(data, FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		
 		
-		FlxG.camera.bounds = level.getBounds();
-		FlxG.worldBounds.copyFrom(level.getBounds());
+		
 		
 		player = new Player("Sam", FlxG.width / 2, FlxG.height / 2, "assets/images/actor2.json");
 		
@@ -48,15 +46,21 @@ class PlayState extends FlxState
 		
 		add(level);
 		add(enemies);
-		add(player);		
+		add(player);
+		
+		var bounds:FlxRect;
 		FlxG.camera.follow(player);
+		bounds = level.getBounds();
+		FlxG.camera.setBounds(bounds.x, bounds.y, bounds.width, bounds.height, true);
+		FlxG.worldBounds.copyFrom(level.getBounds());
 		
-		//FlxG.camera.zoom = 1;
 		
-		// Show the mouse (in case it hasn't been disabled)
+		
+		/* Show the mouse (in case it hasn't been disabled)
 		#if !FLX_NO_MOUSE
 		FlxG.mouse.show();
 		#end
+		*/
 		
 		super.create();
 	}
@@ -75,16 +79,19 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		
 		FlxG.collide(player, level);
 		FlxG.collide(enemies, enemies);
-		FlxG.overlap(player, enemies, onPlayerHitEnemy);
+		FlxG.collide(enemies, level);
+		if(player.attk.alive)
+			FlxG.overlap(player.attk, enemies, player.attackHit);
 		super.update();
 	}
 	
 	private function onPlayerHitEnemy(player:Character, enemy:Enemy):Void
 	{
 		
-		trace("player hit enemy");
+		//
 	}
 	
 	public function placeSprites(sprites:FlxSpriteGroup, num:Int):Void
@@ -100,11 +107,15 @@ class PlayState extends FlxState
 				enemy.y = Math.random()*(level.height);
 				enemy.startPos.x = enemy.x;
 				enemy.startPos.y = enemy.y;
-				enemy.destination = null;
-				
+				enemy.destination = null;				
 			}
 				
 			
 		}
 	}
+	
+	
+	
+	//FPSSTUFF
+	
 }
